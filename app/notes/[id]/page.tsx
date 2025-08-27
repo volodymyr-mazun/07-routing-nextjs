@@ -1,4 +1,6 @@
 
+// ----------СТОРІНКА ВИКОРИСТАННЯ HYDRATIONBOUONDARY ДЛЯ ПЕРЕДАЧІ КЕШУ КЛІЄНТСЬКОМУ КОМПОНЕНТУ----------
+
 import { HydrationBoundary, dehydrate, QueryClient, } from "@tanstack/react-query";
 import { fetchNoteById } from "@/lib/api";
 import NoteDetailsClient from "./NoteDetails.client";

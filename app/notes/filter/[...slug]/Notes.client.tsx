@@ -1,16 +1,19 @@
+
+// ----------СТОРІНКА РОЗМІТКИ----------
+
 "use client";
 
+import css from "./NotesPage.module.css";
 import React, { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useDebounce } from "use-debounce";
-import { fetchNotes } from "@/lib/api";
-import type { FetchNotesResponse } from "@/lib/api";
+
+import { fetchNotes, FetchNotesResponse } from "@/lib/api";
 import NoteList from "@/components/NoteList/NoteList";
 import Pagination from "@/components/Pagination/Pagination";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import Modal from "@/components/Modal/Modal";
 import NoteForm from "@/components/NoteForm/NoteForm";
-import css from "./NotesPage.module.css";
 
 interface NotesClientProps {
     tag: string;
@@ -19,11 +22,9 @@ interface NotesClientProps {
 
 export default function NotesClient({ tag, initialData }: NotesClientProps) {
     const queryClient = useQueryClient();
-
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
-
     const [debouncedSearch] = useDebounce(search, 500);
 
     const { data, isLoading, error, isFetching } = useQuery<FetchNotesResponse>({
@@ -34,6 +35,7 @@ export default function NotesClient({ tag, initialData }: NotesClientProps) {
                 search: debouncedSearch,
                 tag: tag === "All" ? undefined : tag,
             }),
+        
         
         initialData: page === 1 && debouncedSearch === "" ? initialData : undefined,
         placeholderData: () => ({
@@ -84,13 +86,7 @@ export default function NotesClient({ tag, initialData }: NotesClientProps) {
             {data?.notes.length ? (
                 <>
                     <NoteList notes={data.notes} />
-                    {data.totalPages > 1 && (
-                        <Pagination
-                            pageCount={data.totalPages}
-                            onPageChange={handlePageChange}
-                            currentPage={page - 1}
-                        />
-                    )}
+                    {data.totalPages > 1 && ( <Pagination pageCount={data.totalPages} onPageChange={handlePageChange} currentPage={page - 1} /> )}
                 </>
                 ) : (
                     !isLoading && <div className={css.noNotes}>No notes found</div>

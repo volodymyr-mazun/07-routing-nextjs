@@ -13,18 +13,6 @@ export interface Note {
     tag: NoteTag;
 }                                           
 
-export interface UpdateNoteData {
-    title?: string;
-    content?: string;
-    tag: NoteTag;                             
-}
-
-export interface CreateNoteData {
-    title: string;
-    content: string;
-    tag: NoteTag;                            
-}
-
 export interface CreateNotePayload {
     title: string;
     content: string;

@@ -3,7 +3,7 @@
 const Loading = () => {
     return (
         <div style={{ padding: "40px", textAlign: "center", maxWidth: "600px", margin: "0 auto", }} >
-            <p>Loading note details...</p>
+            <p style={{ fontSize: "20px", fontStyle: "italic" }}>Loading note details...</p>
         </div>
     );
 }

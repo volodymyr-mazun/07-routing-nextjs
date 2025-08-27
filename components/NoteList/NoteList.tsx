@@ -3,10 +3,8 @@
 
 "use client";
 import css from "./NoteList.module.css";
-
 import { deleteNote } from "@/lib/api";
 import type { Note } from "@/types/note";
-
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 
@@ -37,7 +35,7 @@ const NoteList = ({ notes }: NoteListProps) => {
             {notes.map((note) => (
                 <li key={note.id} className={css.listItem}>
                     <h3 className={css.title}>{note.title}</h3>
-                    <p className={css.content}>{note.content.length > 120 ? `${note.content.substring(0, 120)}…` : note.content}</p>
+                    <p className={css.content}>{note.content}</p>
 
                     <div className={css.footer}>
                         <span className={css.tag}>{note.tag || "No tag"}</span>

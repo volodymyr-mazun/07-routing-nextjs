@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
-
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 
@@ -30,21 +29,17 @@ export default function RootLayout({
   modal: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning={true}>
+    <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-
         <TanStackProvider>
-
           <div className="container">
             <Header />
             <main>{children}</main>
+            {modal}
             <Footer />
           </div>
-          
-          {modal}
-          <div id="modal-root" />
+          {/* <div id="modal-root" /> */}
         </TanStackProvider>
-
       </body>
     </html>
   );

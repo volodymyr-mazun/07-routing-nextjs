@@ -1,4 +1,7 @@
-import css from "./not-found.module.css";
+
+// ----------СТОРІНКА НЕІСНУЮЧОГО МАРШРУТУ----------
+
+import css from "./home.module.css";
 
 const NotFound = () => {
     return (

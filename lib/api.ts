@@ -43,7 +43,7 @@ export async function createNote(payload: CreateNotePayload): Promise<Note> {
 // ----------Видалення нотатки за ID----------
 export async function deleteNote(id: number | string): Promise<Note> {
     const response = await api.delete(`/notes/${id}`);
-    return response.data;                                                         //містить обєкт видаленної нотатки
+    return response.data;                                                        
 }
 
 // ----------Отримати одну нотатку за її ID----------

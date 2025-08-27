@@ -1,29 +1,21 @@
-import Link from "next/link";
-import { NoteTag } from "@/types/note";
-import css from "./SidebarNotes.module.css";
 
-const TAGS: (NoteTag | "All")[] = [
-    "All",
-    "Todo",
-    "Work",
-    "Personal",
-    "Meeting",
-    "Shopping",
-];
+// ----------СТОРІНКА РЕНДЕРУ САЙДБАРУ----------
 
-export default function SidebarDefault() {
+import css from './SidebarNotes.module.css';
+import Link from 'next/link';
+
+const SidebarNotes = () => {
     return (
-        <div className={css.sidebar}>
-            <h3 className={css.title}>Filter by Tag</h3>
-            <ul className={css.menuList}>
-                {TAGS.map((tag) => (
-                    <li key={tag} className={css.menuItem}>
-                        <Link href={`/notes/filter/${tag}`} className={css.menuLink}>
-                            {tag === "All" ? "All notes" : tag}
-                        </Link>
-                    </li>
-                ))}
-            </ul>
-        </div>
+        <ul className={css.menuList}>
+            {['All', 'Work', 'Personal', 'Meeting', 'Shopping', 'Todo'].map((tag) => (
+                <li key={tag} className={css.menuItem}>
+                    <Link href={`/notes/filter/${tag}`} className={css.menuLink}>
+                        {tag}
+                    </Link>
+                </li>
+            ))}
+        </ul>
     );
-}
+};
+
+export default SidebarNotes;

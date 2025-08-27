@@ -1,11 +1,13 @@
-"use client";
 
+// ----------ОБРОБКА ПОМИЛОК----------
+
+"use client";
 type Props = {
     error: Error;
     reset: () => void;
 };
 
-export default function Error({ error, reset }: Props) {
+const Error = ({ error, reset }: Props) => {
     return (
         <div>
             <h2>Помилка при завантаженні</h2>
@@ -14,3 +16,5 @@ export default function Error({ error, reset }: Props) {
         </div>
     );
 }
+
+export default Error;

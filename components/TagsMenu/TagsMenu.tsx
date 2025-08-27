@@ -1,5 +1,7 @@
-'use client';
 
+// ----------КОМПОНЕНТ, СПИСОК НОТАТОК, ЇХ СОРТУВАННЯ----------
+
+'use client';
 import { useState } from 'react';
 import Link from 'next/link';
 import css from './TagsMenu.module.css';

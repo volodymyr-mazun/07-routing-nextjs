@@ -1,26 +1,20 @@
-import { HydrationBoundary, QueryClient, dehydrate, } from "@tanstack/react-query";
-import { fetchNotes } from "@/lib/api";
-import NotesClient from "./Notes.client";
 
-export default async function FilterPage({ params, }: { params: Promise<{ slug: string[] }>; }) {
-    const { slug } = await params;
-    const tag = slug?.[0] || "All";
+// ----------ГОЛОВНА ДЛЯ НОТАТОК ЗА КАТЕГОРІЯМИ----------
 
-    const queryClient = new QueryClient();
+import { fetchNotes } from '@/lib/api';
+import NotesClient from './Notes.client';
 
-    const initialData = await queryClient.fetchQuery({
-        queryKey: ["notes", 1, "", tag],
-        queryFn: () =>
-        fetchNotes({
-            page: 1,
-            search: "",
-            tag: tag === "All" ? undefined : tag,
-        }),
-    });
+type NotesPageProps = {
+    params: { slug?: string[] };
+};
 
-    return (
-        <HydrationBoundary state={dehydrate(queryClient)}>
-            <NotesClient tag={tag} initialData={initialData} />
-        </HydrationBoundary>
-    );
+export default async function NotesPage({ params }: NotesPageProps) {
+    const rawTag = params.slug?.[0];
+
+
+    const tagForQuery = rawTag && rawTag !== 'All' ? rawTag.charAt(0).toUpperCase() + rawTag.slice(1).toLowerCase() : undefined;
+    const initialData = await fetchNotes({ search: '', page: 1, tag: tagForQuery });
+    const tagForUI = tagForQuery ?? 'All';
+    
+    return <NotesClient tag={tagForUI} initialData={initialData} />;
 }

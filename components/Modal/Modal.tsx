@@ -23,9 +23,7 @@ const Modal = ({ onClose, children }: ModalProps) => {
                 onClose();
             }
         };
-
         const prevOverflow = document.body.style.overflow;
-    
         document.addEventListener("keydown", handleKeyDown);
         document.body.style.overflow = "hidden";
 
@@ -36,20 +34,13 @@ const Modal = ({ onClose, children }: ModalProps) => {
     }, [onClose]);
 
     return createPortal(
-    <div
-        className={css.backdrop}
-        role="dialog"
-        aria-modal="true"
-        onClick={handleBackdropClick}
-    >
-
+    <div onClick={handleBackdropClick} className={css.backdrop} role="dialog" aria-modal="true" >
         <div className={css.modal}>
             <button className={css.closeButton} onClick={onClose} aria-label="Close modal">×</button>
-                {children}
+            {children}
         </div>
     </div>,
-
-    document.body
+        document.body
     );
 };
 

@@ -1,8 +1,9 @@
+
+// ----------СТОРІНКА КЛІЄНТСЬКА, РОБОТА З ЗАПИТОМ НА СЕРВЕР ТА ВИДАЛЕННЯМ НОТАТКИ----------
+
 "use client";
-
-import { fetchNoteById, deleteNote } from "@/lib/api";
 import css from "./NoteDetails.module.css";
-
+import { fetchNoteById, deleteNote } from "@/lib/api";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -36,16 +37,10 @@ export default function NoteDetailsClient({ noteId }: NoteDetailsClientProps) {
         }
     };
 
-    if (!noteId) {
-        return <p>Invalid note ID.</p>;
-    }
-
     if (isLoading) return <p>Loading, please wait...</p>;
-
-    if (error || !note) {
-        return (
+    if (error || !note) {return (
             <div>
-                <p>Something went wrong.</p>
+                <p>Something went wrong...</p>
                 <Link href="/notes/filter/All" className={css.backLink}>← Back to notes</Link>
             </div>
         );

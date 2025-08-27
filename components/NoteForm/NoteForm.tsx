@@ -2,14 +2,16 @@
 // ----------КОМПОНЕНТ, ДЛЯ РОБОТИ З ФОРМОЮ ДОДАВАННЯ НОТАТКИ----------
 
 import css from "./NoteForm.module.css";
-
 import { createNote } from "@/lib/api";
 import { Note, CreateNotePayload, NoteTag } from "../../types/note";
-
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import type { FormikHelpers } from "formik";
 import * as Yup from "yup";
+
+interface NoteFormProps {
+    onClose: () => void;
+}
 
 // ---------- Валідація форми ----------
 const validationSchema = Yup.object().shape({
@@ -23,13 +25,8 @@ const validationSchema = Yup.object().shape({
         .required("Tag is required"),
 });
 
-interface NoteFormProps {
-    onClose: () => void;
-}
-
 const NoteForm = ({ onClose }: NoteFormProps) => {
     const queryClient = useQueryClient();
-
     const mutation = useMutation<Note, Error, CreateNotePayload>({
         mutationFn: createNote,
         onSuccess: () => {
@@ -38,14 +35,8 @@ const NoteForm = ({ onClose }: NoteFormProps) => {
         },
     });
 
-    interface NoteFormValues {
-        title: string;
-        content: string;
-        tag: NoteTag;
-    }
-
 // ---------- Початкові значення форми ----------
-    const initialValues: NoteFormValues = {
+    const initialValues: CreateNotePayload = {
         title: "",
         content: "",
         tag: "Todo",
@@ -55,7 +46,7 @@ const NoteForm = ({ onClose }: NoteFormProps) => {
     <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={(values: NoteFormValues, helpers: FormikHelpers<NoteFormValues>) => {
+        onSubmit={(values: CreateNotePayload, helpers: FormikHelpers<CreateNotePayload>) => {
             mutation.mutate(values, {
             onSuccess: () => {
                 helpers.resetForm();
