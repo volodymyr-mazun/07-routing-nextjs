@@ -1,7 +1,7 @@
 
 // ----------ГОЛОВНА СТОРІНКА----------
 
-import css from "./Home.module.css";
+import css from "./home.module.css";
 
 export default function Home() {
   return (

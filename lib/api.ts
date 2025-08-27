@@ -2,19 +2,12 @@
 // ----------КОМПОНЕНТ, ДЛЯ HTTP ЗАПИТУ----------
 
 import axios from "axios";
-import type { Note, NoteTag } from "../types/note";
+import type { Note, CreateNotePayload } from "../types/note";
 
 // Відповідь від GET /notes: масив нотаток та кількість загальних сторінок.
 export interface FetchNotesResponse {
     notes: Note[];
     totalPages: number;
-}
-
-// Тіло запиту для створення нотатки: заголовок, зміст та тег.
-export interface CreateNotePayload {
-    title: string;
-    content: string;
-    tag: NoteTag;
 }
 
 // ----------Базовий URL, Токен доступу----------
@@ -26,7 +19,16 @@ const api = axios.create({
 });
 
 // ----------Отримати список нотаток----------
-export async function fetchNotes({ page = 1, perPage = 12, search = "", }: { page?: number; perPage?: number; search?: string; }): Promise<FetchNotesResponse> {
+export async function fetchNotes({ page = 1, perPage = 12, search = "", tag, }: { page?: number; perPage?: number; search?: string; tag?: string; }): Promise<FetchNotesResponse> {
+    const params: Record<string, string | number> = { page };
+
+    if (search) {
+        params.search = search;
+    }
+
+    if (tag && tag !== "All") {
+        params.tag = tag;
+    }
     const response = await api.get<FetchNotesResponse>("/notes", { params: { page, perPage, search }, });
     return response.data;
 }

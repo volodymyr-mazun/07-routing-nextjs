@@ -1,7 +1,11 @@
 // ----------КОМПОНЕНТ, ГЛОБАЛЬНИЙ LOADING----------
 
 const Loading = () => {
-    return <p>Loading, please wait...</p>;
+    return (
+        <div style={{ padding: "40px", textAlign: "center", maxWidth: "600px", margin: "0 auto", }} >
+            <p>Loading note details...</p>
+        </div>
+    );
 }
 
 export default Loading;

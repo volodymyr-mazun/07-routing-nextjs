@@ -7,7 +7,11 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-export default function NoteDetailsClient({ noteId }: { noteId: string }) {
+interface NoteDetailsClientProps {
+    noteId: string;
+}
+
+export default function NoteDetailsClient({ noteId }: NoteDetailsClientProps) {
     const router = useRouter();
     const queryClient = useQueryClient();
 
@@ -22,15 +26,19 @@ export default function NoteDetailsClient({ noteId }: { noteId: string }) {
         mutationFn: deleteNote,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["notes"] });
-            router.push("/notes");
+            router.push("/notes/filter/All");
         },
     });
 
     const handleDelete = () => {
         if (window.confirm("Delete this note? This action cannot be undone.")) {
-            removeNote(Number(noteId));
+            removeNote(noteId);
         }
     };
+
+    if (!noteId) {
+        return <p>Invalid note ID.</p>;
+    }
 
     if (isLoading) return <p>Loading, please wait...</p>;
 
@@ -38,7 +46,7 @@ export default function NoteDetailsClient({ noteId }: { noteId: string }) {
         return (
             <div>
                 <p>Something went wrong.</p>
-                <Link href="/notes">← Back to notes</Link>
+                <Link href="/notes/filter/All" className={css.backLink}>← Back to notes</Link>
             </div>
         );
     }
@@ -46,13 +54,13 @@ export default function NoteDetailsClient({ noteId }: { noteId: string }) {
     return (
         <div className={css.container}>
             <div className={css.header}>
-                <Link href="/notes" className={css.backLink}>← Back to notes</Link>
+                <Link href="/notes/filter/All" className={css.backLink}>← Back to notes</Link>
                 <button onClick={handleDelete} disabled={isDeleting} className={css.deleteButton}>{isDeleting ? "Deleting..." : "Delete"}</button>
             </div>
 
             <div className={css.item}>
-                <div className={css.header}>
-                    <h2>{note.title}</h2>
+                <div className={css.noteHeader}>
+                    <h2 className={css.title}>{note.title}</h2>
                     {note.tag && <span className={css.tag}>{note.tag}</span>}
                 </div>
                 <p className={css.content}>{note.content}</p>

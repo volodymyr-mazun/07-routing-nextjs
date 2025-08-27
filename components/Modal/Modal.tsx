@@ -1,10 +1,9 @@
 
-// ----------КОМПОНЕНТ, ДЛЯ РОБОТИ З МОДАЛЬНИМ ВІКНОМ----------
+// ----------КОМПОНЕНТ, ДЛЯ РОБОТИ З МОДАЛЬНИМ ВІКНОМ ДЛЯ СТВОРЕННЯ НОТАТКИ----------
 
 import css from "./Modal.module.css";
 import React, { useEffect } from "react";
 import { createPortal } from "react-dom";
-
 
 interface ModalProps {
     onClose: () => void;
@@ -37,9 +36,18 @@ const Modal = ({ onClose, children }: ModalProps) => {
     }, [onClose]);
 
     return createPortal(
-        <div onClick={handleBackdropClick} className={css.backdrop} role="dialog" aria-modal="true" >
-            <div className={css.modal}>{children}</div>
-        </div>,
+    <div
+        className={css.backdrop}
+        role="dialog"
+        aria-modal="true"
+        onClick={handleBackdropClick}
+    >
+
+        <div className={css.modal}>
+            <button className={css.closeButton} onClick={onClose} aria-label="Close modal">×</button>
+                {children}
+        </div>
+    </div>,
 
     document.body
     );
